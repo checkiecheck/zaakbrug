@@ -18,6 +18,7 @@
   <!ENTITY PostBesluitType                                SYSTEM "./Configuration_PostBesluitType.xml">
   <!ENTITY GetAllBesluitTypen                             SYSTEM "./Configuration_GetAllBesluitTypen.xml">
   <!ENTITY GetBesluitTypeByUrl                            SYSTEM "./Configuration_GetBesluitTypeByUrl.xml">
+  <!ENTITY PostStatusType                                 SYSTEM "./Configuration_PostStatusType.xml">
   <!ENTITY GetBas64Inhoud                                 SYSTEM "./Configuration_GetBas64Inhoud.xml">
   <!ENTITY GetResultaatTypeByZaakTypeAndOmschrijving      SYSTEM "./Configuration_GetResultaatTypeByZaakTypeAndOmschrijving.xml">
   <!ENTITY GetResultatenByZaakUrl                         SYSTEM "./Configuration_GetResultatenByZaakUrl.xml">
@@ -88,6 +89,7 @@
   &PostBesluitType;
   &GetAllBesluitTypen;
   &GetBesluitTypeByUrl;
+  &PostStatusType;
   &GetBas64Inhoud;
   &GetResultaatTypeByZaakTypeAndOmschrijving;
   &GetResultatenByZaakUrl;

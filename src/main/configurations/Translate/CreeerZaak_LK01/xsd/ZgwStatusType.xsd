@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:simpleType name="zgwUri">
+    <xs:restriction base="xs:anyURI">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="1000"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="ZgwStatusType">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="omschrijving" minOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="omschrijvingGeneriek" minOccurs="0">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="statustekst" minOccurs="0">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="1000"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="zaaktype" type="zgwUri"/>
+        <xs:element name="volgnummer">
+          <xs:simpleType>
+            <xs:restriction base="xs:integer">
+                <xs:minInclusive value="1"/>
+                <xs:maxInclusive value="9999"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="informeren" type="xs:boolean"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
+
+<!-- <ZgwStatusType>
+  <omschrijving>ThisIsNewStatusType</omschrijving>
+  <omschrijvingGeneriek>newStatusTypeGeneriek</omschrijvingGeneriek>
+  <statustekst>stringStatusTekst</statustekst>
+  <zaaktype>http://open-zaak.nginx:9001/catalogi/api/v1/zaaktypen/3c1e531a-a72f-491a-8669-053703762d43</zaaktype>
+  <volgnummer>99</volgnummer>
+  <informeren>false</informeren>
+</ZgwStatusType> -->

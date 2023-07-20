@@ -1,0 +1,72 @@
+<Module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../FrankConfig.xsd">
+    <Adapter name="PostStatusType"
+        active="${PostBesluitType.Active}"
+        description="">
+
+        <Receiver name="PostStatusType">
+             <JavaListener name="PostStatusType"/>
+        </Receiver>
+
+        <Pipeline>
+            <Exits>
+                <Exit name="EXIT" state="SUCCESS" />
+                <Exit name="EXCEPTION" state="ERROR" />
+            </Exits>
+
+            <SenderPipe name="PostZgwStatusType">
+
+                <Json2XmlInputValidator name="ValidatePost"
+                    schema="CreeerZaak_LK01\xsd\ZgwStatusType.xsd"
+                    root="ZgwStatusType"
+                    outputFormat="JSON"
+                    deepSearch="true"
+                    throwException="true"
+                />
+
+                <HttpSender name="PostZgwStatusTypeSender"
+                    methodType="POST"
+                    headersParams="Authorization, Accept"
+                    timeout="${zaakbrug.zgw.zaken-api.timeout}"
+                    maxExecuteRetries="5"
+                    contentType="application/json">
+                    <Param name="url" value="${zaakbrug.zgw.catalogi-api.root-url}statustypen"/>
+                    <Param name="Accept" value="application/json" />
+                    <Param name="Authorization" value="Bearer @@zaken-api.jwt@@" />
+                </HttpSender>
+
+                <Forward name="success" path="JsonToXml" />
+
+                <Forward name="exception" path="ErrorJsonToXml" />
+
+            </SenderPipe>
+
+            <JsonPipe name="ErrorJsonToXml">
+                <Forward name="success" path="buildErrorMsg" />
+            </JsonPipe>
+
+            <XsltPipe name="buildErrorMsg"
+                styleSheetName="Common/xsl/ParseNegativeHttpResult.xsl">
+                <Param name="senderPipeName" value="PostZgwStatusType" />
+                <Forward name="success" path="EXCEPTION" />
+            </XsltPipe>
+
+            <JsonPipe name="JsonToXml"
+                storeResultInSessionKey="PostZgwStatusTypeResult"
+                prettyPrint="true">
+                <Forward name="success" path="UnwrapOpenZaakApiEnvelopeToSingle" />
+            </JsonPipe>
+
+
+            <XsltPipe
+
+                name="UnwrapOpenZaakApiEnvelopeToSingle"
+                styleSheetName="Common/xsl/UnwrapOpenZaakApiEnvelopeToSingle.xslt"
+            >
+                <Param name="Type" value="ZgwStatusType" />
+                <Forward name="success" path="EXIT" />
+                <Forward name="error" path="EXCEPTION" />
+            </XsltPipe>
+        </Pipeline>
+    </Adapter>
+</Module>
