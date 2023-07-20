@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:simpleType name="zgwUri">
+    <xs:restriction base="xs:anyURI">
+      <xs:minLength value="1"/>
+      <xs:maxLength value="1000"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="ZgwBesluitType">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="catalogus" type="zgwUri"/>
+        <xs:element name="zaaktypen">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="zaaktype" type="zgwUri" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="omschrijving" minOccurs="0">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="omschrijvingGeneriek" minOccurs="0">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="80"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="besluitcategorie">
+          <xs:simpleType>
+            <xs:restriction base="xs:string">
+              <xs:maxLength value="40"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
+        <xs:element name="reactietermijn" type="xs:duration" minOccurs="0"/>
+        <xs:element name="publicatieIndicatie" type="xs:boolean"/>
+        <xs:element name="publicatietekst" type="xs:string" minOccurs="0"/>
+        <xs:element name="publicatietermijn" type="xs:duration" minOccurs="0"/>
+        <xs:element name="toelichting" type="xs:string" minOccurs="0"/>
+        <xs:element name="informatieobjecttypen">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="informatieobjecttype" type="zgwUri" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="beginGeldigheid" type="xs:date"/>
+        <xs:element name="eindeGeldigheid" type="xs:date" minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
+
+
+<!-- <ZgwBesluitType>
+  <catalogus>http://open-zaak.nginx:9001/catalogi/api/v1/catalogussen/02b35c7d-173e-4afe-95c8-abec66976317</catalogus>
+  <zaaktypen/>
+  <omschrijving>stringOmschrijving4</omschrijving>
+  <omschrijvingGeneriek>stringOmschrijvingGeneriek</omschrijvingGeneriek>
+  <besluitcategorie>stringBesluitcategorie</besluitcategorie>
+  <publicatieIndicatie>false</publicatieIndicatie>
+  <publicatietekst>stringPublicatietekst</publicatietekst>
+  <toelichting>stringToelichting</toelichting>
+  <informatieobjecttypen/>
+  <beginGeldigheid>2020-08-24</beginGeldigheid>
+  <eindeGeldigheid>2020-08-25</eindeGeldigheid>
+</ZgwBesluitType> -->

@@ -1,0 +1,53 @@
+<Module xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../FrankConfig.xsd">
+    <Adapter name="GetCatalogueByUrl"
+        active="${GetCatalogueByUrl.Active}"
+        description="">
+
+        <Receiver name="GetCatalogueByUrl">
+            <JavaListener name="GetCatalogueByUrl"/>
+        </Receiver>
+
+        <Pipeline>
+            <Exits>
+                <Exit name="EXIT" state="SUCCESS"/>
+                <Exit name="EXCEPTION" state="ERROR"/>
+            </Exits>
+
+			<SenderPipe name="GetZgwCatalogueByUrlSender"
+                getInputFromFixedValue="&lt;dummy/&gt;">
+				<HttpSender 
+					name="GetZgwCatalogueByUrlHttpSender" 
+					methodType="GET"
+					headersParams="Authorization"
+                    timeout="${zaakbrug.zgw.catalogi-api.timeout}"
+				/>
+                <Param name="url" sessionKey="CatalogueUrl"/>
+                <Param name="Authorization" value="Bearer @@catalogi-api.jwt@@"/>
+                <Forward name="success" path="JsonToXml" />
+                <Forward name="exception" path="ErrorJsonToXml" />
+			</SenderPipe>
+            <JsonPipe name="ErrorJsonToXml">
+                <Forward name="success" path="buildErrorMsg" />
+            </JsonPipe>
+            <XsltPipe name="buildErrorMsg"
+                styleSheetName="Common/xsl/ParseNegativeHttpResult.xsl">
+                <Param name="senderPipeName" value="GetZgwCatalogueByUrlSender" />
+                <Forward name="success" path="EXCEPTION" />
+            </XsltPipe>
+
+            <JsonPipe name="JsonToXml"
+                storeResultInSessionKey="GetCatalogueXmlResult">
+                <Forward name="success" path="UnwrapOpenZaakApiEnvelopeToSingle"/>
+            </JsonPipe>
+
+            <XsltPipe
+                name="UnwrapOpenZaakApiEnvelopeToSingle"
+                styleSheetName="Common/xsl/UnwrapOpenZaakApiEnvelopeToSingle.xslt"
+                >
+                <Param name="Type" value="Catalogue"/>
+                <Forward name="success" path="EXIT"/>
+                <Forward name="error" path="EXCEPTION"/>
+            </XsltPipe>
+        </Pipeline>
+    </Adapter>
+</Module>

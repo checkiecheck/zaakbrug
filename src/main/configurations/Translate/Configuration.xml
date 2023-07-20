@@ -13,6 +13,10 @@
   <!ENTITY GeefZaakdetails_Lv01                           SYSTEM "./Configuration_GeefZaakdetails_Lv01.xml">
   <!ENTITY GeefZaakdocumentLezen_Lv01                     SYSTEM "./Configuration_GeefZaakdocumentLezen_Lv01.xml">
   <!ENTITY GenereerIdentificatieEmulator                  SYSTEM "./Configuration_GenereerIdentificatieEmulator.xml">
+  <!ENTITY GetAllCatalogussen                             SYSTEM "./Configuration_GetAllCatalogussen.xml">
+  <!ENTITY GetCatalogueByUrl                              SYSTEM "./Configuration_GetCatalogueByUrl.xml">
+  <!ENTITY PostBesluitType                                SYSTEM "./Configuration_PostBesluitType.xml">
+  <!ENTITY GetAllBesluitTypen                             SYSTEM "./Configuration_GetAllBesluitTypen.xml">
   <!ENTITY GetBas64Inhoud                                 SYSTEM "./Configuration_GetBas64Inhoud.xml">
   <!ENTITY GetResultaatTypeByZaakTypeAndOmschrijving      SYSTEM "./Configuration_GetResultaatTypeByZaakTypeAndOmschrijving.xml">
   <!ENTITY GetResultatenByZaakUrl                         SYSTEM "./Configuration_GetResultatenByZaakUrl.xml">
@@ -78,6 +82,10 @@
   &GeefZaakdetails_Lv01;
   &GeefZaakdocumentLezen_Lv01;
   &GenereerIdentificatieEmulator;
+  &GetAllCatalogussen;
+  &GetCatalogueByUrl;
+  &PostBesluitType;
+  &GetAllBesluitTypen;
   &GetBas64Inhoud;
   &GetResultaatTypeByZaakTypeAndOmschrijving;
   &GetResultatenByZaakUrl;
